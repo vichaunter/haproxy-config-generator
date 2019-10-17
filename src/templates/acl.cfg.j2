@@ -1,0 +1,4 @@
+{% for acl in frontend.acls | default([]) %}{% if acl.conditions is defined %}acl {{acl.name}} {{acl.conditions}}{% else %}{% if acl.criterion is defined %}acl {{acl.name}} {{acl.criterion}}{% endif %} {% if acl.flags is defined %}{{acl.flags}}{% endif %} {% for pattern in acl.patterns | default([])%} {{pattern}}{% endfor %}{% endif %}
+    {% if acl.use_backend is defined %}use_backend {{acl.use_backend}} if {{acl.name}}{% endif %}
+
+    {% if acl.http_request is defined %}http-request {{acl.http_request}}{% endif %}{% endfor %}

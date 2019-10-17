@@ -1,0 +1,19 @@
+global
+    {% for log in haproxy_globals.logs %}log {{log}}
+    {% endfor %}
+    {% if haproxy_globals.chroot is defined %}chroot {{haproxy_globals.chroot}}{% endif %}
+    stats{% for stat in haproxy_globals.stats %} {{stat.key}} {{stat.value}}{% endfor %}
+    {% if haproxy_globals.user is defined %}user {{haproxy_globals.user}}
+    {% endif %}
+    {% if haproxy_globals.group is defined %}group {{haproxy_globals.group}}{% endif %}
+    {% if haproxy_globals.daemon %}daemon{% endif %}
+
+    {% if haproxy_globals.ca_base is defined %}ca-base {{haproxy_globals.ca_base}}{% endif %}
+    {% if haproxy_globals.crt_base is defined %}crt-base {{haproxy_globals.crt_base}}{% endif %}
+
+    {% for bind in haproxy_globals.ssl_default_bind %}ssl-default-bind-{{bind.key}}
+    {{bind.value}}{% endfor %}
+
+    {% if haproxy_globals.maxconn is defined %}maxconn {{haproxy_globals.maxconn}}{% endif %}
+    {% for tune_ssl in haproxy_globals.tune_ssl %}tune.ssl.{{tune_ssl.name}} {{tune_ssl.value}}
+    {% endfor %}

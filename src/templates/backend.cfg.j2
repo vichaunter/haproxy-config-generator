@@ -1,0 +1,6 @@
+{% for backend in haproxy_backend | default([]) %}backend {{ backend.name }}
+    {% if backend.description is defined %}description {{ backend.description }}{% endif %}
+    {% if backend.redirect is defined %}redirect {{backend.redirect}}{% endif %}
+    {% for server in backend.servers | default([]) %}server {{server.name}} {{server.bind}} {% if server.params is defined %}{{server.params}}{% endif %}
+    {% endfor %}
+{% endfor %}

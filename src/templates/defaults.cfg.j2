@@ -1,0 +1,10 @@
+defaults
+    {% if haproxy_defaults.log is defined %}log {{haproxy_defaults.log}}{% endif %}
+    {% if haproxy_defaults.mode is defined %}mode {{haproxy_defaults.mode}}{% endif %}
+
+    {% for option in haproxy_defaults.options %}option {{option}}
+    {% endfor %}
+    {% for timeout in haproxy_defaults.timeouts %}timeout {{timeout.key}} {{timeout.value}}
+    {% endfor %}
+    {% for errorfile in haproxy_defaults.errorfiles %}errorfile {{errorfile.number}} {{errorfile.src}}
+    {% endfor %}

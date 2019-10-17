@@ -1,0 +1,9 @@
+{% for frontend in haproxy_frontend %}frontend {{ frontend.name }}
+    {% if frontend.description is defined %}description {{ frontend.description }}{% endif %}
+
+    {% if frontend.bind is defined %}bind {{ frontend.bind }} {% if frontend.ssl_paths is defined %}ssl {% for path in frontend.ssl_paths %}crt {{path}} {% endfor %}{% endif %}{% endif %}
+    {% if frontend.reqadd is defined %}reqadd {{ frontend.reqadd }}{% endif %}
+    {% if frontend.acls is defined %}{% include 'acl.cfg.j2' %}{% endif %}
+    {% if frontend.default_backend is defined %}default_backend {{frontend.default_backend}}{% endif %}
+
+{% endfor %}

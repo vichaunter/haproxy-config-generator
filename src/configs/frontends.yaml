@@ -1,0 +1,166 @@
+haproxy_frontend:
+  - name: www-http
+    description: Front-end for all HTTP traffic
+    bind: '*:80'
+    reqadd: 'X-Forwarded-Proto:\ http'
+    default_backend: blind
+    acls:
+      - name: letsencrypt-acl
+        conditions: path_beg /.well-known/acme-challenge/
+        use_backend: letsencrypt-backend
+
+      - name: host_test
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - proxmox.testing
+        use_backend: test
+
+      - name: host_vichaunter
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - vichaunter.org
+          - www.vichaunter.org
+        use_backend: vichaunter
+
+      - name: host_caraculo
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - payouwant.com
+        use_backend: caraculo
+
+      - name: host_reviewhardware
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - reviewhardware.com
+          - www.reviewhardware.com
+        use_backend: reviewhardware
+
+      - name: host_vichaunterforo
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - foro.vichaunter.org
+        use_backend: vichaunterforo
+
+      - name: host_toolsomatic
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - ww.toolsomatic.com
+        use_backend: toolsomatic
+
+      - name: host_ctAnsibleTasks
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - endpoint.toolsomatic.com
+        use_backend: ctAnsibleTasks
+
+      - name: host_sehnatbydleni
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - sehnatbydleni.cz
+          - www.sehnatbydleni.cz
+        use_backend: ctWebServer
+
+      - name: host_sehnatbydleniapi
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - api.sehnatbydleni.cz
+        use_backend: ctWebServerAPI
+
+      - name: host_gyswuServer
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - gyswu.com
+          - www.gyswu.com
+        use_backend: gyswuServer
+
+      - name: host_gyswuServerOido
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - oidococina.gyswu.com
+        use_backend: gyswuServerOido
+
+      - name: host_apuestapi
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - www.apuestapi.com
+        use_backend: apuestapi
+
+
+  - name: www-https
+    description: Front-end for all HTTPS traffic
+    bind: "*:443"
+    mode: http
+    default_backend: blind
+    reqadd: 'X-Forwarded-Proto:\ https'
+    ssl_paths:
+      - /etc/haproxy/certs/reviewhardware.com.pem
+      - /etc/haproxy/certs/foro.vichaunter.org.pem
+      - /etc/haproxy/certs/www.toolsomatic.com.pem
+      - /etc/haproxy/certs/vichaunter.org.pem
+    acls:
+      - name: host_vichaunter
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - vichaunter.org
+          - www.vichaunter.org
+        use_backend: vichaunter
+
+      - name: host_vichaunterforo
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - foro.vichaunter.org
+        use_backend: vichaunterforo
+
+      - name: host_reviewhardware
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - reviewhardware.com
+          - www.reviewhardware.com
+        use_backend: reviewhardware
+
+      - name: host_toolsomatic
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - toolsomatic.com
+          - www.toolsomatic.com
+        use_backend: toolsomatic
+
+      - name: host_caraculo
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - payouwant.com
+          - www.payouwant.com
+          - api.payouwant.com
+          - cdn.payouwant.com
+        use_backend: caraculo
+
+      - name: host_esgitlab
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - git.espacesky.eu
+        use_backend: ctGitlab
+
+      - name: host_apuestapi
+        criterion: hdr(host)
+        flags: -i
+        patterns:
+          - www.apuestapi.com
+        use_backend: apuestapi

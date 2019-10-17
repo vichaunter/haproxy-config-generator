@@ -1,0 +1,120 @@
+haproxy_backend:
+  ############## VicHaunter network ########################
+  - name: vichaunter
+    description: VicHaunter.org main servers
+    redirect: 'scheme https if !{ ssl_fc }'
+    servers:
+      - name: www-1
+        bind: '10.0.0.160:80'
+        params: check
+  - name: vichaunterforo
+    description: foro.vichaunter.org main servers
+    redirect: 'scheme https if !{ ssl_fc }'
+    servers:
+      - name: www-1
+        bind: '10.0.0.161:443'
+        params: check
+      ############## VicHaunter network Otros########################
+  - name: reviewhardware
+    description: ReviewHardware.com main servers
+    redirect: 'scheme https if !{ ssl_fc }'
+    servers:
+      - name: www-1
+        bind: '10.0.0.151:443'
+        params: check
+  - name: toolsomatic
+    description: toolsomatic.com main servers
+    redirect: 'scheme https if !{ ssl_fc }'
+    servers:
+      - name: www-1
+        bind: '10.0.0.152:443'
+        params: check
+
+  - name: www-backend
+    description: ni idea
+    redirect: 'scheme https if !{ ssl_fc }'
+    servers:
+      - name: www-1
+        bind: '10.0.0.150:443'
+        params: check
+  ######################################
+  ############### ESPACESKY #######################
+  - name: caraculo
+    description: payouwant.org
+    redirect: 'scheme https if !{ ssl_fc }'
+    servers:
+      - name: www-1
+        bind: 10.1.0.192:443
+        params: check
+  - name: ctController
+    description: ctController
+    servers:
+      - name: www-1
+        bind: '10.0.0.191:80'
+        params: check
+  - name: ctWebServer
+    description: ctWebServer
+    servers:
+      - name: www-1
+        bind: '10.0.0.192:80'
+        params: check
+  - name: ctWebServerAPI
+    description: ctWebServerAPI
+    servers:
+      - name: www-1
+        bind: '10.0.0.192:8008'
+        params: check
+  - name: ctAnsibleTasks
+    description: tasks in ctAnsible
+    servers:
+      - name: www-1
+        bind: '10.2.0.191:8010'
+        params: check
+  - name: ctGitlab
+    description: ctGitlab
+    servers:
+      - name: www-01
+        bind: '10.0.0.195:80'
+        params: check
+  ######################################
+  ###############COLEGAS#######################
+  - name: gyswuServer
+    description: Gyswu
+    servers:
+      - name: www-1
+        bind: '10.0.0.235:80'
+        params: check
+  - name: gyswuServerOido
+    description: Gyswu oidococina
+    servers:
+      - name: www-1
+        bind: '10.0.0.235:888'
+        params: check
+  - name: apuestapi
+    description: "server with Gyswu"
+    servers:
+      - name: www-1
+        bind: '10.0.0.149:80'
+        params: check
+  ######################################
+  ##############LICENSE VALIDATION########################
+  - name: letsencrypt-backend
+    description: letsencrypt-backend validation ssl certificates
+    server:
+      - name: www-1
+        bind: 127.0.0.1:54321
+  ######################################
+  ###############OTROS#######################
+  - name: test
+    description: letsencrypt-backend validation ssl certificates
+    redirect: 'scheme https if !{ ssl_fc }'
+    server:
+      - name: www-1
+        bind: 10.0.0.160:80
+
+  - name: blind
+    description: fallback server dummy
+    server:
+      - name: www-01
+        bind: 127.0.0.1:80
+

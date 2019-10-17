@@ -1,0 +1,16 @@
+{
+  "name": "haproxy-config-generator",
+  "version": "0.0.1",
+  "description": "Haproxy config generator (from yaml file)",
+  "main": "index.jsx",
+  "repository": "git@github.com:vichaunter/haproxy-config-generator.git",
+  "author": "VicHaunter",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./src/index.jsx"
+  },
+  "dependencies": {
+    "nunjucks": "^3.2.0",
+    "yaml": "^1.7.2"
+  }
+}

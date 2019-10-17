@@ -1,0 +1,30 @@
+haproxy_defaults:
+  log: global
+  mode: http
+  options:
+    - forwardfor
+    - http-server-close
+    - httplog
+    - dontlognull
+  timeouts:
+    - key: connect
+      value: 4999
+    - key: client
+      value: 50000
+    - key: server
+      value: 50000
+  errorfiles:
+    - number: 400
+      src: /etc/haproxy/errors/400.http
+    - number: 403
+      src: /etc/haproxy/errors/403.http
+    - number: 408
+      src: /etc/haproxy/errors/408.http
+    - number: 500
+      src: /etc/haproxy/errors/500.http
+    - number: 502
+      src: /etc/haproxy/errors/502.http
+    - number: 503
+      src: /etc/haproxy/errors/503.http
+    - number: 504
+      src: /etc/haproxy/errors/504.http
